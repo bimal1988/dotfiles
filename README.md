@@ -13,6 +13,6 @@ This repository contains all my dotfiles managed by [chezmoi](https://github.com
 
 //TODO:
 1. Setup fnm (shell configuration and completion)
-2. Install nodejs (will be required by neovim)
+2. Install nodejs (may be required by neovim)
 3. Setup neovim
-4. Setup prezto
+4. Setup shell configurations for installed commands

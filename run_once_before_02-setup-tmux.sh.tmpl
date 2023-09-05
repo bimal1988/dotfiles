@@ -3,8 +3,9 @@
 
 TMUX_CONF_DIR=$HOME/.tmux
 if [ -e $TMUX_CONF_DIR/plugins/tpm ]; then
-    read -p "TPM seems to be already installed, do you want to reinstall? [y/N]: " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    read -p "TPM seems to be already installed, do you want to reinstall? [y/N]: " -n 1 response
+    echo
+    if [[ "$response" =~ ^[yY]$ ]]; then
         rm -rf $TMUX_CONF_DIR/plugins 
         git clone https://github.com/tmux-plugins/tpm $TMUX_CONF_DIR/plugins/tpm
         sh $TMUX_CONF_DIR/plugins/tpm/bin/install_plugins

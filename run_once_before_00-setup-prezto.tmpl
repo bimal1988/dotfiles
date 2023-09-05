@@ -2,8 +2,9 @@
 #!/bin/zsh
 
 if [ -e "${ZDOTDIR:-$HOME}/.zprezto" ]; then
-    read -qs "response?Prezto seems to be already installed, do you want to reinstall? [y/N]: "
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    read -q "response?Prezto seems to be already installed, do you want to reinstall? [y/N]: "
+    echo
+    if [[ "$response" =~ ^[yY]$ ]]; then
         rm -rf "${ZDOTDIR:-$HOME}/.zprezto"
         git clone --recursive https://github.com/bimal1988/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
         setopt EXTENDED_GLOB
