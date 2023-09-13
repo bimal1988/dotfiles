@@ -1,23 +1,13 @@
-" Remap leader key
-let mapleader = ' '
-
 " Plugins
-set easymotion
 set sneak
-set quickscope
 set nerdtree
 set textobj-indent
 set highlightedyank
 set surround
 
-" Quickscope options
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-let g:qs_primary_color = '#e64553'
-let g:qs_secondary_color = '#fe640b'
-let g:qs_accepted_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '[', ']', '<', '>']
-
-""" Common settings
+" Common settings
 set scrolloff=3
+set sidescrolloff=3
 set incsearch
 set ignorecase
 set smartcase
@@ -26,35 +16,25 @@ set number
 set relativenumber
 set showmode
 set showcmd
-
-" Clear the search buffer when hitting return
-nnoremap <CR> :nohlsearch<CR>
-
-" No annoying sound on errors
 set visualbell
 set tm=500
-
-""" Idea specific settings
-set ideajoin
-
-" Copy to system clipboard as well
 set clipboard+=unnamed
+set ideajoin
+set ideamarks
 
-" Remap escape key
+" Common Mappings 
+let mapleader = ' '
 inoremap jj <Esc>
-
-" NERDTree
-map <leader>n :NERDTreeToggle<CR>
-
-" Open Terminal
-nmap <Leader>t :action ActivateTerminalToolWindow<CR>
-
-" Toggle ToggleDistractionFreeMode
-nmap <Leader>df :action ToggleDistractionFreeMode<CR>
-
-" Shortcutting split navigation
+nnoremap <CR> :nohlsearch<CR>
 map <a-h> <C-w>h
 map <a-j> <C-w>j
 map <a-k> <C-w>k
 map <a-l> <C-w>l
 
+" Idea specific mappings 
+nmap <Leader>ff <Action>(GotoFile)
+nmap <Leader>t <Action>(ActivateTerminalToolWindow)
+nmap <Leader>df <Action>(ToggleDistractionFreeMode)
+nmap [[ <Action>(MethodUp)
+nmap ]] <Action>(MethodDown)
+nmap <Leader>ca <Action>(ShowIntentionActions)
