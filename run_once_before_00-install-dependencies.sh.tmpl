@@ -19,5 +19,6 @@ EOF
 brew install --cask font-hasklug-nerd-font
 {{ else if eq .chezmoi.os "linux" }}
 mkdir -p ~/.local/share/fonts &&
-    curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz | tar xJf - -C ~/.local/share/fonts
+curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz | tar xJf - -C ~/.local/share/fonts &&
+fc-cache -f ~/.local/share/fonts
 {{ end }}
