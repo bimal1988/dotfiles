@@ -1,6 +1,6 @@
 #!/bin/bash
 {{ if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux")) }}
-echo "Setting up Neovim"
+echo "Setting up Neovim..."
 NVIM_CONFIG_DIR="$HOME/.config/nvim"
 
 if [ -d "$NVIM_CONFIG_DIR" ] && [ "$(ls -A $NVIM_CONFIG_DIR)" ]; then
