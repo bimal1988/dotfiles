@@ -1,4 +1,21 @@
 #!/bin/bash
 {{ if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux")) }}
-git clone https://github.com/NvChad/starter ~/.config/nvim
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
+
+if [ -d "$NVIM_CONFIG_DIR" ] && [ "$(ls -A $NVIM_CONFIG_DIR)" ]; then
+    echo "The directory $NVIM_CONFIG_DIR already exists and is not empty."
+    read -p "Do you want to remove its contents and proceed with the clone? (y/n) " -n 1 -r
+    echo    # Move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "Removing contents of $NVIM_CONFIG_DIR"
+        rm -rf "$NVIM_CONFIG_DIR"/*
+    else
+        echo "Aborting the clone operation."
+        exit 1
+    fi
+fi
+
+echo "Cloning NvChad starter configuration..."
+git clone https://github.com/NvChad/starter "$NVIM_CONFIG_DIR"
 {{ end }}
