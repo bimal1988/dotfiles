@@ -9,7 +9,7 @@ if [ -d "$NVIM_CONFIG_DIR" ] && [ "$(ls -A $NVIM_CONFIG_DIR)" ]; then
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         echo "Removing contents of $NVIM_CONFIG_DIR"
-        rm -rf "$NVIM_CONFIG_DIR"/*
+        rm -rf "$NVIM_CONFIG_DIR"
     else
         echo "Aborting the clone operation."
         exit 1
