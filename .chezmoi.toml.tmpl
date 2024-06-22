@@ -1,3 +1,4 @@
+{{ $name := promptString "name" }}
 {{ $email := promptString "email" }}
 {{ $osid := .chezmoi.os }}
 {{ if hasKey .chezmoi.osRelease "id" }}
@@ -6,4 +7,5 @@
 
 [data]
 osid = {{ $osid | quote }}
+name = {{ $name | quote }}
 email = {{ $email | quote }}

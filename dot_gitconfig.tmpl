@@ -1,22 +1,22 @@
 [user]
+	name =  {{ .name }}
 	email = {{ .email }} 
-	name = Bimal
 [core]
-    pager = delta
+	pager = delta
 	autocrlf = input
 
 [interactive]
-    diffFilter = delta --color-only
+	diffFilter = delta --color-only
 
 [delta]
-    navigate = true  # use n and N to move between diff sections
-    side-by-side = true
+	navigate = true  # use n and N to move between diff sections
+	side-by-side = true
 
 [merge]
-    conflictstyle = diff3
+	conflictstyle = diff3
 
 [diff]
-    colorMoved = default
+	colorMoved = default
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
