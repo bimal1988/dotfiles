@@ -1,6 +1,5 @@
-{{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux")) -}}
 #!/bin/bash
-
+{{ if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux")) }}
 TMUX_CONF_DIR=$HOME/.tmux
 if [ -e $TMUX_CONF_DIR/plugins/tpm ]; then
     read -p "TPM seems to be already installed, do you want to reinstall? [y/N]: " -n 1 response
@@ -11,4 +10,4 @@ if [ -e $TMUX_CONF_DIR/plugins/tpm ]; then
         sh $TMUX_CONF_DIR/plugins/tpm/bin/install_plugins
     fi
 fi
-{{ end -}}
+{{ end }}

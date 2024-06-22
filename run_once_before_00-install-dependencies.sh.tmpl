@@ -1,0 +1,23 @@
+#!/bin/bash
+brew bundle --no-lock --file=/dev/stdin <<EOF
+brew "tmux"
+brew "eza"
+brew "bat"
+brew "git-delta"
+brew "fd"
+brew "ripgrep"
+brew "zoxide"
+brew "fzf"
+brew "neovim"
+brew "ffmpegthumbnailer"
+brew "unar"
+brew "jq"
+brew "poppler"
+brew "yazi"
+EOF
+{{ if eq .chezmoi.os "darwin" }}
+brew install --cask font-hasklug-nerd-font
+{{ else if eq .chezmoi.os "linux" }}
+mkdir -p ~/.local/share/fonts &&
+    curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz | tar xJf - -C ~/.local/share/fonts
+{{ end }}
