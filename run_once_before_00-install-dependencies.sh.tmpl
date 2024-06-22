@@ -18,7 +18,29 @@ EOF
 {{ if eq .chezmoi.os "darwin" }}
 brew install --cask font-hasklug-nerd-font
 {{ else if eq .chezmoi.os "linux" }}
-mkdir -p ~/.local/share/fonts
-curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz | tar xJf - -C ~/.local/share/fonts
-fc-cache -f ~/.local/share/fonts
+set -euo pipefail
+
+FONT_BASE_DIR="$HOME/.local/share/fonts"
+NERD_FONTS_DIR="$FONT_BASE_DIR/NerdFonts"
+HASKLIG_DIR="$NERD_FONTS_DIR/Hasklig"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz"
+
+echo "Installing Hasklig Nerd Font..."
+
+# Create Hasklig Nerd Font directory
+if ! mkdir -p "$HASKLIG_DIR"; then
+    echo "Error: Failed to create Hasklig Nerd Font directory $HASKLIG_DIR" >&2
+    exit 1
+fi
+
+# Download and extract font
+if ! curl -sL "$FONT_URL" | tar xJf - -C "$HASKLIG_DIR"; then
+    echo "Error: Failed to download or extract font" >&2
+    exit 1
+fi
+
+# Update font cache
+if ! fc-cache -f "$FONT_BASE_DIR"; then
+    echo "Warning: Failed to update font cache. You may need to do this manually." >&2
+fi
 {{ end }}
