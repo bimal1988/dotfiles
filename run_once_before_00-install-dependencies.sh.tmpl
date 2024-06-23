@@ -1,46 +1,84 @@
 #!/bin/bash
-brew bundle --no-lock --file=/dev/stdin <<EOF
-brew "tmux"
-brew "eza"
-brew "bat"
-brew "git-delta"
-brew "fd"
-brew "ripgrep"
-brew "zoxide"
-brew "fzf"
-brew "neovim"
-brew "ffmpegthumbnailer"
-brew "unar"
-brew "jq"
-brew "poppler"
-brew "yazi"
-EOF
-{{ if eq .chezmoi.os "darwin" }}
-brew install --cask font-hasklug-nerd-font
-{{ else if eq .chezmoi.os "linux" }}
-set -euo pipefail
 
-FONT_BASE_DIR="$HOME/.local/share/fonts"
-NERD_FONTS_DIR="$FONT_BASE_DIR/NerdFonts"
-HASKLIG_DIR="$NERD_FONTS_DIR/Hasklig"
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz"
+# Function to ensure required tools are installed on Linux
+ensure_linux_dependencies() {
+    local packages_to_install=()
 
-echo "Installing Hasklig Nerd Font..."
+    if ! command -v curl &> /dev/null; then
+        packages_to_install+=("curl")
+    fi
 
-# Create Hasklig Nerd Font directory
-if ! mkdir -p "$HASKLIG_DIR"; then
-    echo "Error: Failed to create Hasklig Nerd Font directory $HASKLIG_DIR" >&2
-    exit 1
-fi
+    if ! command -v fc-cache &> /dev/null; then
+        packages_to_install+=("fontconfig")
+    fi
 
-# Download and extract font
-if ! curl -sL "$FONT_URL" | tar xJf - -C "$HASKLIG_DIR"; then
-    echo "Error: Failed to download or extract font" >&2
-    exit 1
-fi
+    if [ ${#packages_to_install[@]} -ne 0 ]; then
+        echo "Installing required packages: ${packages_to_install[*]}"
+        if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y "${packages_to_install[@]}"
+        elif command -v dnf &> /dev/null; then
+            sudo dnf install -y "${packages_to_install[@]}"
+        elif command -v yum &> /dev/null; then
+            sudo yum install -y "${packages_to_install[@]}"
+        elif command -v pacman &> /dev/null; then
+            sudo pacman -Syu --noconfirm "${packages_to_install[@]}"
+        else
+            echo "Error: Unable to install packages. Please install ${packages_to_install[*]} manually." >&2
+            return 1
+        fi
+    fi
+}
 
-# Update font cache
-if ! fc-cache -f "$FONT_BASE_DIR"; then
-    echo "Warning: Failed to update font cache. You may need to do this manually." >&2
-fi
-{{ end }}
+# Function to install Hasklig Nerd Font on Linux
+install_hasklig_nerd_font_linux() {
+    local FONT_BASE_DIR="$HOME/.local/share/fonts"
+    local NERD_FONTS_DIR="$FONT_BASE_DIR/NerdFonts"
+    local HASKLIG_DIR="$NERD_FONTS_DIR/Hasklig"
+    local FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz"
+
+    echo "Installing Hasklig Nerd Font..."
+    
+    # Ensure dependencies are installed
+    ensure_linux_dependencies || return 1
+
+    # Create Hasklig Nerd Font directory
+    mkdir -p "$HASKLIG_DIR" || { echo "Error: Failed to create Hasklig Nerd Font directory $HASKLIG_DIR" >&2; return 1; }
+
+    # Download and extract font
+    if ! curl -sL "$FONT_URL" | tar xJf - -C "$HASKLIG_DIR"; then
+        echo "Error: Failed to download or extract font" >&2
+        return 1
+    fi
+
+    # Update font cache
+    fc-cache -f "$FONT_BASE_DIR" || echo "Warning: Failed to update font cache. You may need to do this manually." >&2
+
+    echo "Hasklig Nerd Font installed successfully."
+}
+
+# Main script execution
+main() {
+    # Install Homebrew packages
+    if ! install_homebrew_packages; then
+        echo "Error: Failed to install Homebrew packages" >&2
+        exit 1
+    fi
+
+    # OS-specific installations
+    {{ if eq .chezmoi.os "darwin" }}
+    if ! brew install --cask font-hasklug-nerd-font; then
+        echo "Error: Failed to install Hasklig Nerd Font via Homebrew" >&2
+        exit 1
+    fi
+    {{ else if eq .chezmoi.os "linux" }}
+    if ! install_hasklig_nerd_font_linux; then
+        echo "Error: Failed to install Hasklig Nerd Font on Linux" >&2
+        exit 1
+    fi
+    {{ end }}
+
+    echo "All installations completed successfully."
+}
+
+# Run the main function
+main
