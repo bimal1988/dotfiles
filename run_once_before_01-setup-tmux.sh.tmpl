@@ -20,7 +20,12 @@ prompt_reinstall() {
 install_tpm() {
     echo "Installing TPM..."
     git clone https://github.com/tmux-plugins/tpm "$TMUX_CONF_DIR/plugins/tpm"
-    sh "$TMUX_CONF_DIR/plugins/tpm/bin/install_plugins"
+    
+    # Modified part: Install plugins manually
+    echo "Installing plugins..."
+    bash "$TMUX_CONF_DIR/plugins/tpm/scripts/install_plugins.sh" || {
+        echo "Failed to install plugins automatically. Please install manually by pressing prefix + I in a tmux session."
+    }
 }
 
 # Main script execution
@@ -35,4 +40,9 @@ if is_tpm_installed; then
     fi
 else
     install_tpm
+fi
+
+# Remind user to reload tmux if it's running
+if [ -n "${TMUX:-}" ]; then
+    echo "Please reload tmux for changes to take effect. Run 'tmux source ~/.tmux.conf' in your tmux session."
 fi
