@@ -24,7 +24,7 @@ install_tpm() {
 }
 
 # Main script execution
-TMUX_CONF_DIR=$HOME/.tmux
+TMUX_CONF_DIR="$HOME/.tmux"
 
 if is_tpm_installed; then
     if prompt_reinstall; then
