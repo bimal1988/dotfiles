@@ -1,4 +1,25 @@
 #!/bin/bash
+set -euo pipefail
+
+# Function to install Homebrew packages
+install_homebrew_packages() {
+    brew bundle --no-lock --file=/dev/stdin <<EOF
+    brew "tmux"
+    brew "eza"
+    brew "bat"
+    brew "git-delta"
+    brew "fd"
+    brew "ripgrep"
+    brew "zoxide"
+    brew "fzf"
+    brew "neovim"
+    brew "ffmpegthumbnailer"
+    brew "unar"
+    brew "jq"
+    brew "poppler"
+    brew "yazi"
+    EOF
+}
 
 # Function to ensure required tools are installed on Linux
 ensure_linux_dependencies() {
