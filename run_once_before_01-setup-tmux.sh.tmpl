@@ -5,7 +5,7 @@ set -euo pipefail
 
 # Function to check if TPM is installed
 is_tpm_installed() {
-    [[ -e $TMUX_CONF_DIR/plugins/tpm ]]
+    [[ -e "$TMUX_CONF_DIR/plugins/tpm" ]]
 }
 
 # Function to prompt the user for reinstallation
@@ -19,8 +19,8 @@ prompt_reinstall() {
 # Function to install TPM
 install_tpm() {
     echo "Installing TPM..."
-    git clone https://github.com/tmux-plugins/tpm $TMUX_CONF_DIR/plugins/tpm
-    sh $TMUX_CONF_DIR/plugins/tpm/bin/install_plugins
+    git clone https://github.com/tmux-plugins/tpm "$TMUX_CONF_DIR/plugins/tpm"
+    sh "$TMUX_CONF_DIR/plugins/tpm/bin/install_plugins"
 }
 
 # Main script execution
@@ -28,7 +28,7 @@ TMUX_CONF_DIR="$HOME/.tmux"
 
 if is_tpm_installed; then
     if prompt_reinstall; then
-        rm -rf $TMUX_CONF_DIR/plugins
+        rm -rf "$TMUX_CONF_DIR/plugins"
         install_tpm
     else
         echo "Skipping TPM reinstallation."
