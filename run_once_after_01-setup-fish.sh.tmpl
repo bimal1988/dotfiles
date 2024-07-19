@@ -3,4 +3,22 @@
 # Exit on error, undefined variable, or pipeline failure
 set -euo pipefail
 
-fisher update
+# Function to run Fisher update
+run_fisher_update() {
+    if command -v fish &>/dev/null; then
+        echo "Updating Fisher and its plugins..."
+        fish -c 'fisher update'
+        echo "Fisher update completed successfully."
+    else
+        echo "Error: Fish shell is not installed or not in PATH." >&2
+        exit 1
+    fi
+}
+
+# Main function
+main() {
+    run_fisher_update
+}
+
+# Run the main function
+main
