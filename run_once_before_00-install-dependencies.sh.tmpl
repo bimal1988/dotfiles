@@ -25,23 +25,23 @@ EOF
 ensure_linux_dependencies() {
     local packages_to_install=()
 
-    if ! command -v curl &> /dev/null; then
+    if ! command -v curl &>/dev/null; then
         packages_to_install+=("curl")
     fi
 
-    if ! command -v fc-cache &> /dev/null; then
+    if ! command -v fc-cache &>/dev/null; then
         packages_to_install+=("fontconfig")
     fi
 
     if [ ${#packages_to_install[@]} -ne 0 ]; then
         echo "Installing required packages: ${packages_to_install[*]}"
-        if command -v apt-get &> /dev/null; then
+        if command -v apt-get &>/dev/null; then
             sudo apt-get update && sudo apt-get install -y "${packages_to_install[@]}"
-        elif command -v dnf &> /dev/null; then
+        elif command -v dnf &>/dev/null; then
             sudo dnf install -y "${packages_to_install[@]}"
-        elif command -v yum &> /dev/null; then
+        elif command -v yum &>/dev/null; then
             sudo yum install -y "${packages_to_install[@]}"
-        elif command -v pacman &> /dev/null; then
+        elif command -v pacman &>/dev/null; then
             sudo pacman -Syu --noconfirm "${packages_to_install[@]}"
         else
             echo "Error: Unable to install packages. Please install ${packages_to_install[*]} manually." >&2
@@ -58,12 +58,15 @@ install_hasklig_nerd_font_linux() {
     local FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hasklig.tar.xz"
 
     echo "Installing Hasklig Nerd Font..."
-    
+
     # Ensure dependencies are installed
     ensure_linux_dependencies || return 1
 
     # Create Hasklig Nerd Font directory
-    mkdir -p "$HASKLIG_DIR" || { echo "Error: Failed to create Hasklig Nerd Font directory $HASKLIG_DIR" >&2; return 1; }
+    mkdir -p "$HASKLIG_DIR" || {
+        echo "Error: Failed to create Hasklig Nerd Font directory $HASKLIG_DIR" >&2
+        return 1
+    }
 
     # Download and extract font
     if ! curl -sL "$FONT_URL" | tar xJf - -C "$HASKLIG_DIR"; then
@@ -75,6 +78,18 @@ install_hasklig_nerd_font_linux() {
     fc-cache -f "$FONT_BASE_DIR" || echo "Warning: Failed to update font cache. You may need to do this manually." >&2
 
     echo "Hasklig Nerd Font installed successfully."
+}
+
+# Function to install Fisher - The Fish Plugin Manager
+install_fisher() {
+    echo "Installing Fisher..."
+    if command -v fish &>/dev/null; then
+        fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
+        echo "Fisher installed successfully."
+    else
+        echo "Error: Fish shell is not installed. Please install Fish shell before installing Fisher." >&2
+        return 1
+    fi
 }
 
 # Main script execution
@@ -97,6 +112,12 @@ main() {
         exit 1
     fi
     {{ end }}
+
+    # Install Fisher
+    if ! install_fisher; then
+        echo "Error: Failed to install Fisher" >&2
+        exit 1
+    fi
 
     echo "All installations completed successfully."
 }
