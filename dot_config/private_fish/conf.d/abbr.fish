@@ -11,5 +11,6 @@ abbr --add gc git commit -m
 abbr --add gp git push
 abbr --add gpl git pull
 abbr --add vi nvim
+abbr --add yy yazi
 abbr -a L --position anywhere --set-cursor "% | less"
 abbr -a F --position anywhere --set-cursor "% | fzf"
