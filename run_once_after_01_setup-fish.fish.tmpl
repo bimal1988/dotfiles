@@ -1,30 +1,43 @@
 #!/usr/bin/env fish
 
-function run_fisher_update
-    echo "Updating Fisher and its plugins..."
-    fisher update
-    echo "Fisher update completed successfully."
+function install_fisher
+    if not functions -q fisher
+        echo "Fisher is not installed. Installing Fisher..."
+        curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+        echo "Fisher installed successfully."
+    else
+        echo "Fisher is already installed."
+    end
 end
 
-function run_fzf_setup
-    echo "Setting up fzf..."
-    fzf_configure_bindings --directory=\co
-    echo "Fzf setup completed successfully."
+function install_plugins
+    set plugins \
+        jorgebucaran/fisher \
+        patrickf1/fzf.fish \
+        IlanCosman/tide@v6
+
+    echo "Installing Fish plugins..."
+    for plugin in $plugins
+        fisher install $plugin
+    end
+    echo "Fish plugins installation completed."
+end
+
+function setup_fzf
+    if functions -q fzf_configure_bindings
+        echo "Setting up fzf bindings..."
+        fzf_configure_bindings --directory=\co
+        echo "FZF bindings setup completed."
+    else
+        echo "Warning: fzf_configure_bindings function not found. Skipping FZF setup."
+    end
 end
 
 function main
-    if not type -q fisher
-        echo "Error: Fisher is not installed. Please install Fisher first." >&2
-        exit 1
-    end
-
-    if not type -q fzf_configure_bindings
-        echo "Error: fzf_configure_bindings function not found. Ensure the fzf.fish plugin is installed." >&2
-        exit 1
-    end
-
-    run_fisher_update
-    run_fzf_setup
+    install_fisher
+    install_plugins
+    setup_fzf
+    echo "Fish setup completed successfully."
 end
 
 main
