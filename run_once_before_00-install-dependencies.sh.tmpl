@@ -19,22 +19,29 @@ brew "poppler"
 brew "yazi"
 brew "mise"
 brew "starship"
-brew "terminal-notifier"
 EOF
 }
 
 # Function to ensure required tools are installed on Linux
 ensure_linux_dependencies() {
     local packages_to_install=()
-
     if ! command -v curl &>/dev/null; then
         packages_to_install+=("curl")
     fi
-
     if ! command -v fc-cache &>/dev/null; then
         packages_to_install+=("fontconfig")
     fi
-
+    if ! command -v notify-send &>/dev/null; then
+        if command -v apt-get &>/dev/null; then
+            packages_to_install+=("libnotify-bin")
+        elif command -v dnf &>/dev/null || command -v yum &>/dev/null; then
+            packages_to_install+=("libnotify")
+        elif command -v pacman &>/dev/null; then
+            packages_to_install+=("libnotify")
+        else
+            echo "Warning: Unable to determine package for notify-send. Please install it manually." >&2
+        fi
+    fi
     if [ ${#packages_to_install[@]} -ne 0 ]; then
         echo "Installing required packages: ${packages_to_install[*]}"
         if command -v apt-get &>/dev/null; then
@@ -82,18 +89,6 @@ install_hasklig_nerd_font_linux() {
     echo "Hasklig Nerd Font installed successfully."
 }
 
-# Function to install Fisher - The Fish Plugin Manager
-install_fisher() {
-    echo "Installing Fisher..."
-    if command -v fish &>/dev/null; then
-        fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
-        echo "Fisher installed successfully."
-    else
-        echo "Error: Fish shell is not installed. Please install Fish shell before installing Fisher." >&2
-        return 1
-    fi
-}
-
 # Main script execution
 main() {
     # Install Homebrew packages
@@ -108,18 +103,18 @@ main() {
         echo "Error: Failed to install Hasklig Nerd Font via Homebrew" >&2
         exit 1
     fi
+
+    if ! brew install terminal-notifier; then
+        echo "Error: Failed to install terminal-notifier" >&2
+        exit 1
+    fi
+
     {{ else if eq .chezmoi.os "linux" }}
     if ! install_hasklig_nerd_font_linux; then
         echo "Error: Failed to install Hasklig Nerd Font on Linux" >&2
         exit 1
     fi
     {{ end }}
-
-    # Install Fisher
-    if ! install_fisher; then
-        echo "Error: Failed to install Fisher" >&2
-        exit 1
-    fi
 
     echo "All installations completed successfully."
 }
