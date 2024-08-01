@@ -99,6 +99,18 @@ install_hasklig_nerd_font_linux() {
     echo "Hasklig Nerd Font installed successfully."
 }
 
+install_node() {
+    echo "Installing Node..."
+    mise use node
+    echo "Node installed successfully."
+}
+
+install_python() {
+    echo "Installing Python..."
+    mise use python
+    echo "Python installed successfully."
+}
+
 # Main script execution
 main() {
     # Install Homebrew packages
@@ -125,6 +137,16 @@ main() {
         exit 1
     fi
     {{ end }}
+
+    if ! install_node; then
+        echo "Error: Failed to install Node" >&2
+        exit 1
+    fi
+
+    if ! install_python; then
+        echo "Error: Failed to install Python" >&2
+        exit 1
+    fi
 
     echo "All installations completed successfully."
 }
