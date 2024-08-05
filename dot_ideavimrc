@@ -4,9 +4,10 @@ set nerdtree
 set textobj-indent
 set highlightedyank
 set surround
+set which-key
 
 " Common settings
-set scrolloff=3
+set scrolloff=0
 set sidescrolloff=3
 set incsearch
 set ignorecase
@@ -17,7 +18,7 @@ set relativenumber
 set showmode
 set showcmd
 set visualbell
-set tm=500
+set tm=5000
 set clipboard+=unnamed
 set ideajoin
 set ideamarks
@@ -33,17 +34,20 @@ map <a-l> <C-w>l
 
 " Idea specific mappings 
 nmap <Leader>ff <Action>(GotoFile)
-nmap <Leader>t <Action>(ActivateTerminalToolWindow)
+nmap <Leader>ft <Action>(ActivateTerminalToolWindow)
 nmap <Leader>z <Action>(ToggleDistractionFreeMode)
-nmap [[ <Action>(MethodUp)
-nmap ]] <Action>(MethodDown)
+nmap [m <Action>(MethodUp)
+nmap [f <Action>(MethodUp)
+nmap ]m <Action>(MethodDown)
+nmap ]f <Action>(MethodDown)
 nmap <Leader>ca <Action>(ShowIntentionActions)
-nmap <leader>x <Action>(CloseEditor)
 nmap <leader>db <Action>(ToggleLineBreakpoint)
 nmap <leader>o <Action>(FileStructurePopup)
 nmap <leader>e <Action>(ShowErrorDescription)
-nmap <leader>en <Action>(GotoNextError)
-nmap <leader>re <Action>(RenameElement)
+nmap <leader>]e <Action>(GotoNextError)
+nmap <leader>[e <Action>(GotoPreviousError)
+nmap <leader>cr <Action>(RenameElement)
+nmap <leader>cR <Action>(RenameFile)
 nmap <leader>r <Action>(Run)
 nmap <leader>d <Action>(Debug)
 nmap <leader>s <Action>(Stop)
