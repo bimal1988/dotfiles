@@ -27,10 +27,10 @@ set ideamarks
 let mapleader = ' '
 inoremap jj <Esc>
 nnoremap <CR> :nohlsearch<CR>
-map <a-h> <C-w>h
-map <a-j> <C-w>j
-map <a-k> <C-w>k
-map <a-l> <C-w>l
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 " Idea specific mappings
 nmap <Leader><Leader> <Action>(GotoFile)
