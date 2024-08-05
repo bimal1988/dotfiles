@@ -14,8 +14,8 @@ if status is-interactive
     abbr --add vi nvim
     abbr --add yy yazi
     abbr --add fuck fk
-    abbr -a L --position anywhere --set-cursor "% | less"
-    abbr -a G --position anywhere --set-cursor "% | rg"
-    abbr -a F --position anywhere --set-cursor "% | fzf"
-    abbr -a S --position anywhere --set-cursor "% | source"
+    abbr -a L --position anywhere "| less"
+    abbr -a G --position anywhere "| rg"
+    abbr -a F --position anywhere "| fzf"
+    abbr -a S --position anywhere "| source"
 end
