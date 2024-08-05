@@ -32,7 +32,8 @@ map <a-j> <C-w>j
 map <a-k> <C-w>k
 map <a-l> <C-w>l
 
-" Idea specific mappings 
+" Idea specific mappings
+nmap <Leader><Leader> <Action>(GotoFile)
 nmap <Leader>ff <Action>(GotoFile)
 nmap <Leader>ft <Action>(ActivateTerminalToolWindow)
 nmap <Leader>z <Action>(ToggleDistractionFreeMode)
