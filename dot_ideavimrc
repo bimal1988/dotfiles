@@ -51,3 +51,15 @@ nmap <leader>cR <Action>(RenameFile)
 nmap <leader>r <Action>(Run)
 nmap <leader>d <Action>(Debug)
 nmap <leader>s <Action>(Stop)
+
+" NERDTree mappings
+nmap <leader>e :NERDTreeToggle<CR>
+
+" HarpoonIJ mappings
+nmap <leader>h <Action>(ShowHarpoon)
+nmap <leader>H <Action>(AddToHarpoon)
+nmap <leader>1 <Action>(GotoHarpoon1)
+nmap <leader>2 <Action>(GotoHarpoon2)
+nmap <leader>3 <Action>(GotoHarpoon3)
+nmap <leader>4 <Action>(GotoHarpoon4)
+nmap <leader>5 <Action>(GotoHarpoon5)

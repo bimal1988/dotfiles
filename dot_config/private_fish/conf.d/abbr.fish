@@ -13,6 +13,7 @@ if status is-interactive
     abbr --add gpl git pull
     abbr --add vi nvim
     abbr --add yy yazi
+    abbr --add fuck fk
     abbr -a L --position anywhere --set-cursor "% | less"
     abbr -a G --position anywhere --set-cursor "% | rg"
     abbr -a F --position anywhere --set-cursor "% | fzf"
