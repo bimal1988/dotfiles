@@ -5,6 +5,7 @@ if status is-interactive
     abbr --add ll lsd -l
     abbr --add lla lsd -la
     abbr --add lt lsd --tree --depth 2
+    abbr --add cl clear
     abbr --add j z
     abbr --add gs git status
     abbr --add ga git add

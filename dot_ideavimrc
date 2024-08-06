@@ -23,7 +23,7 @@ set clipboard+=unnamed
 set ideajoin
 set ideamarks
 
-" Common Mappings 
+" Common mappings 
 let mapleader = ' '
 inoremap jj <Esc>
 nnoremap <CR> :nohlsearch<CR>
@@ -35,23 +35,48 @@ map <C-l> <C-w>l
 " Idea specific mappings
 nmap <Leader><Leader> <Action>(GotoFile)
 nmap <Leader>ff <Action>(GotoFile)
+nmap <Leader>fr <Action>(RecentFiles)
+nmap <Leader><Leader> <Action>(RecentFiles)
+nmap <Leader>fl <Action>(RecentLocations)
+
 nmap <Leader>ft <Action>(ActivateTerminalToolWindow)
-nmap <Leader>z <Action>(ToggleDistractionFreeMode)
+
+nmap <Leader>df <Action>(ToggleDistractionFreeMode)
+nmap <Leader>dz <Action>(ToggleZenMode)
+
 nmap [m <Action>(MethodUp)
 nmap [f <Action>(MethodUp)
+nmap [[ <Action>(MethodUp
 nmap ]m <Action>(MethodDown)
 nmap ]f <Action>(MethodDown)
+nmap ]] <Action>(MethodDown)
 nmap <Leader>ca <Action>(ShowIntentionActions)
-nmap <leader>db <Action>(ToggleLineBreakpoint)
 nmap <leader>o <Action>(FileStructurePopup)
 nmap <leader>e <Action>(ShowErrorDescription)
 nmap <leader>]e <Action>(GotoNextError)
 nmap <leader>[e <Action>(GotoPreviousError)
 nmap <leader>cr <Action>(RenameElement)
 nmap <leader>cR <Action>(RenameFile)
-nmap <leader>r <Action>(Run)
-nmap <leader>d <Action>(Debug)
-nmap <leader>s <Action>(Stop)
+
+" Run mappings
+nmap <leader>oo <Action>(Run)
+nmap <leader>oO <Action>(ChooseRunConfiguration)
+nmap <leader>ob <Action>(editRunConfigurations)
+
+" Debug mappings
+nmap <leader>da <Action>(Debug)
+nmap <leader>dA <Action>(ChooseDebugConfiguration)
+nmap <leader>dl <Action>(Rerun)
+nmap <leader>dp <Action>(Pause)
+nmap <leader>dc <Action>(Resume)
+nmap <leader>dC <Action>(RunToCursor)
+nmap <leader>do <Action>(StepOver)
+nmap <leader>dO <Action>(StepOut)
+nmap <leader>di <Action>(StepInto)
+nmap <leader>dI <Action>(StepIntoMyCode)
+nmap <leader>de <Action>(EvaluateExpression)
+nmap <leader>db <Action>(ToggleLineBreakpoint)
+nmap <leader>dt <Action>(Stop)
 
 " NERDTree mappings
 nmap <leader>e :NERDTreeToggle<CR>
@@ -64,3 +89,6 @@ nmap <leader>2 <Action>(GotoHarpoon2)
 nmap <leader>3 <Action>(GotoHarpoon3)
 nmap <leader>4 <Action>(GotoHarpoon4)
 nmap <leader>5 <Action>(GotoHarpoon5)
+
+" AceJump mappings
+map f <Action>(AceAction)
