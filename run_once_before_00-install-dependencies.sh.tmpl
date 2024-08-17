@@ -128,6 +128,16 @@ main() {
         exit 1
     fi
 
+    if ! brew install --cask nikitabobko/tap/aerospace; then
+        echo "Error: Failed to install Aerospace via Homebrew" >&2
+        exit 1
+    fi
+
+    if ! brew install felixkratz/formulae/borders; then
+        echo "Error: Failed to install JankyBorders via Homebrew" >&2
+        exit 1
+    fi
+
     if ! brew install terminal-notifier; then
         echo "Error: Failed to install terminal-notifier" >&2
         exit 1
